@@ -7,7 +7,8 @@ def load_ordnance_dict(
     directory=code_dir,
     filenames=[
         "ordnance_DoD_UltraTEM_5F_APG.h5",
-        "ordnance_DoD_UltraTEM_5F_ISOsmall.h5"
+        "ordnance_DoD_UltraTEM_5F_ISOsmall.h5",
+        "ordnance_DoD_UltraTEM_NATA_dyn_F_scale0o86.h5"
     ]
 ):
     """
@@ -25,7 +26,10 @@ def load_ordnance_dict(
             L2 = f[f'ordnance/{i}/L2ref'][()].flatten()
             L1 = f[f'ordnance/{i}/L3ref'][()].flatten()
             size_mm = int(f[f'ordnance/{i}/size_mm'][()].flatten())
-            common_name = f[f'ordnance/{i}/h5_Common_Name'][()].flatten()[0][0]
+            common_name = f[f'ordnance/{i}/h5_Common_Name'][()].flatten()[0]
+
+            if isinstance(common_name, list):
+                common_name = common_name[0]
 
             if ord_name not in ord_dict.keys():
                 times = f[f'ordnance/{i}/time'][()].flatten()
